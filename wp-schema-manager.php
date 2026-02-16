@@ -85,4 +85,5 @@ function wpschema_activate(): void {
 function wpschema_deactivate(): void {
 	// Clean up transients.
 	delete_transient( 'wpschema_conflict_check' );
+	delete_transient( 'wpschema_github_update' );
 }

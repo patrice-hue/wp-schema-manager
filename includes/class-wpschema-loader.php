@@ -35,6 +35,9 @@ class WPSchema_Loader {
 
 			$bulk = new WPSchema_Bulk();
 			$bulk->init();
+
+			$updater = new WPSchema_GitHub_Updater();
+			$updater->init();
 		}
 
 		$output = new WPSchema_Output();
@@ -53,6 +56,7 @@ class WPSchema_Loader {
 		require_once $includes_dir . 'class-wpschema-conflict.php';
 		require_once $includes_dir . 'class-wpschema-preview.php';
 		require_once $includes_dir . 'class-wpschema-bulk.php';
+		require_once $includes_dir . 'class-wpschema-github-updater.php';
 
 		// Schema type classes.
 		$types_dir = $includes_dir . 'schema-types/';
