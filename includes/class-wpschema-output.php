@@ -126,6 +126,15 @@ class WPSchema_Output {
 			}
 		}
 
+		// Auto-inject BreadcrumbList if enabled.
+		if ( ! empty( $this->settings['breadcrumb_enabled'] ) ) {
+			$breadcrumb = new WPSchema_Type_BreadcrumbList( $this->settings );
+			$breadcrumb_schema = $breadcrumb->build( $post_id );
+			if ( ! empty( $breadcrumb_schema ) ) {
+				$schemas[] = $breadcrumb_schema;
+			}
+		}
+
 		return $schemas;
 	}
 
@@ -147,10 +156,15 @@ class WPSchema_Output {
 	 */
 	private function build_entity_schema( string $type, ?int $post_id = null ): ?array {
 		$schema_object = match ( $type ) {
-			'Organization'  => new WPSchema_Type_Organisation( $this->settings ),
-			'LocalBusiness' => new WPSchema_Type_LocalBusiness( $this->settings ),
-			'Person'        => new WPSchema_Type_Person( $this->settings ),
-			default         => null,
+			'Organization'        => new WPSchema_Type_Organisation( $this->settings ),
+			'LocalBusiness'       => new WPSchema_Type_LocalBusiness( $this->settings ),
+			'ProfessionalService' => new WPSchema_Type_ProfessionalService( $this->settings ),
+			'Person'              => new WPSchema_Type_Person( $this->settings ),
+			'Service'             => new WPSchema_Type_Service( $this->settings ),
+			'FAQPage'             => new WPSchema_Type_FAQPage( $this->settings ),
+			'Product'             => new WPSchema_Type_Product( $this->settings ),
+			'Offer'               => new WPSchema_Type_Offer( $this->settings ),
+			default               => null,
 		};
 
 		if ( ! $schema_object ) {
@@ -189,6 +203,7 @@ class WPSchema_Output {
 			'schema_type'        => 'Organization',
 			'website_schema'     => true,
 			'enabled_post_types' => array( 'post', 'page' ),
+			'breadcrumb_enabled' => false,
 		);
 
 		return wp_parse_args( get_option( 'wpschema_settings', array() ), $defaults );

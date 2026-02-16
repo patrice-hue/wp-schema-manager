@@ -14,7 +14,7 @@ Designed with enterprise and agency workflows in mind, the plugin supports multi
 
 ## Features
 
-### Current (v0.1 — Foundation)
+### v0.1 — Foundation
 - JSON-LD output injected cleanly into `<head>` — no inline `<script>` conflicts
 - Schema type support: `LocalBusiness`, `Person`, `Organisation`, `WebSite`, `WebPage`
 - Post/page-level schema override via meta box
@@ -23,12 +23,14 @@ Designed with enterprise and agency workflows in mind, the plugin supports multi
 - Schema preview panel in the WordPress admin (raw JSON-LD output before publish)
 - Validation-ready output tested against Google's Rich Results Test and Schema.org standards
 
-### Roadmap (v0.2 — Extended Types)
+### Current (v0.2 — Extended Types)
 - `Service` and `ProfessionalService` schema support
-- `FAQPage` schema with accordion block integration
-- `BreadcrumbList` auto-generation from permalink structure
-- `Product` and `Offer` schema for WooCommerce
-- Bulk schema assignment by category, tag, or custom taxonomy
+- `FAQPage` schema with WordPress Details block (accordion) integration
+- `BreadcrumbList` auto-generation from permalink structure and post hierarchy
+- `Product` and `Offer` schema for WooCommerce (auto-detects WC product data)
+- Bulk schema assignment by category, tag, or custom taxonomy (Tools → Schema Bulk Assign)
+- Admin settings sections for Service details and BreadcrumbList toggle
+- Per-post schema type override dropdown now includes all extended types
 
 ### Roadmap (v0.3 — Enterprise Features)
 - Multisite network support with site-level schema inheritance

@@ -212,6 +212,49 @@ class WPSchema_Admin {
 				array( 'field' => $key )
 			);
 		}
+
+		// Service section.
+		add_settings_section(
+			'wpschema_service',
+			__( 'Service Details', 'wp-schema-manager' ),
+			array( $this, 'render_service_section' ),
+			'wpschema-settings'
+		);
+
+		$service_fields = array(
+			'service_name'        => __( 'Service Name', 'wp-schema-manager' ),
+			'service_description' => __( 'Service Description', 'wp-schema-manager' ),
+			'service_url'         => __( 'Service URL', 'wp-schema-manager' ),
+			'service_type'        => __( 'Service Type', 'wp-schema-manager' ),
+			'service_area'        => __( 'Area Served', 'wp-schema-manager' ),
+		);
+
+		foreach ( $service_fields as $key => $label ) {
+			add_settings_field(
+				'wpschema_' . $key,
+				$label,
+				array( $this, 'render_text_field' ),
+				'wpschema-settings',
+				'wpschema_service',
+				array( 'field' => $key )
+			);
+		}
+
+		// BreadcrumbList section.
+		add_settings_section(
+			'wpschema_breadcrumb',
+			__( 'Breadcrumb Settings', 'wp-schema-manager' ),
+			array( $this, 'render_breadcrumb_section' ),
+			'wpschema-settings'
+		);
+
+		add_settings_field(
+			'wpschema_breadcrumb_enabled',
+			__( 'BreadcrumbList Schema', 'wp-schema-manager' ),
+			array( $this, 'render_breadcrumb_enabled_field' ),
+			'wpschema-settings',
+			'wpschema_breadcrumb'
+		);
 	}
 
 	/**
@@ -233,12 +276,15 @@ class WPSchema_Admin {
 			$sanitized['enabled_post_types'] = array_map( 'sanitize_key', $input['enabled_post_types'] );
 		}
 
+		$sanitized['breadcrumb_enabled'] = ! empty( $input['breadcrumb_enabled'] );
+
 		// Text fields.
 		$text_fields = array(
 			'org_name', 'org_url', 'org_logo', 'org_phone', 'org_email',
 			'org_street', 'org_locality', 'org_region', 'org_postal_code', 'org_country',
 			'person_name', 'person_url', 'person_job_title', 'person_image',
 			'lb_price_range', 'lb_opening_hours',
+			'service_name', 'service_description', 'service_url', 'service_type', 'service_area',
 		);
 
 		foreach ( $text_fields as $field ) {
@@ -246,7 +292,7 @@ class WPSchema_Admin {
 		}
 
 		// Sanitize URL fields specifically.
-		$url_fields = array( 'org_url', 'org_logo', 'person_url', 'person_image' );
+		$url_fields = array( 'org_url', 'org_logo', 'person_url', 'person_image', 'service_url' );
 		foreach ( $url_fields as $field ) {
 			if ( ! empty( $sanitized[ $field ] ) ) {
 				$sanitized[ $field ] = esc_url_raw( $sanitized[ $field ] );
@@ -286,8 +332,14 @@ class WPSchema_Admin {
 			'person_url'         => '',
 			'person_job_title'   => '',
 			'person_image'       => '',
-			'lb_price_range'     => '',
-			'lb_opening_hours'   => '',
+			'lb_price_range'      => '',
+			'lb_opening_hours'    => '',
+			'service_name'        => '',
+			'service_description' => '',
+			'service_url'         => '',
+			'service_type'        => '',
+			'service_area'        => '',
+			'breadcrumb_enabled'  => false,
 		);
 
 		$settings = get_option( $this->option_key, array() );
@@ -366,9 +418,11 @@ class WPSchema_Admin {
 	public function render_schema_type_field(): void {
 		$settings = $this->get_settings();
 		$types    = array(
-			'Organization'  => __( 'Organisation', 'wp-schema-manager' ),
-			'LocalBusiness' => __( 'Local Business', 'wp-schema-manager' ),
-			'Person'        => __( 'Person', 'wp-schema-manager' ),
+			'Organization'        => __( 'Organisation', 'wp-schema-manager' ),
+			'LocalBusiness'       => __( 'Local Business', 'wp-schema-manager' ),
+			'ProfessionalService' => __( 'Professional Service', 'wp-schema-manager' ),
+			'Person'              => __( 'Person', 'wp-schema-manager' ),
+			'Service'             => __( 'Service', 'wp-schema-manager' ),
 		);
 		?>
 		<select name="wpschema_settings[schema_type]" id="wpschema_schema_type">
@@ -450,5 +504,38 @@ class WPSchema_Admin {
 		if ( 'lb_opening_hours' === $field ) {
 			echo '<p class="description">' . esc_html__( 'Example: Mo-Fr 08:30-17:00, Sa 09:00-13:00', 'wp-schema-manager' ) . '</p>';
 		}
+		if ( 'service_type' === $field ) {
+			echo '<p class="description">' . esc_html__( 'E.g., "Consulting", "Legal Services", "Accounting"', 'wp-schema-manager' ) . '</p>';
+		}
+		if ( 'service_area' === $field ) {
+			echo '<p class="description">' . esc_html__( 'Geographic area where the service is available.', 'wp-schema-manager' ) . '</p>';
+		}
+	}
+
+	/**
+	 * Render the Service section description.
+	 */
+	public function render_service_section(): void {
+		echo '<p>' . esc_html__( 'These details are used for Service and ProfessionalService schema types.', 'wp-schema-manager' ) . '</p>';
+	}
+
+	/**
+	 * Render the Breadcrumb section description.
+	 */
+	public function render_breadcrumb_section(): void {
+		echo '<p>' . esc_html__( 'BreadcrumbList schema is auto-generated from the permalink structure and post hierarchy.', 'wp-schema-manager' ) . '</p>';
+	}
+
+	/**
+	 * Render the breadcrumb enabled checkbox field.
+	 */
+	public function render_breadcrumb_enabled_field(): void {
+		$settings = $this->get_settings();
+		?>
+		<label>
+			<input type="checkbox" name="wpschema_settings[breadcrumb_enabled]" value="1" <?php checked( $settings['breadcrumb_enabled'] ); ?> />
+			<?php esc_html_e( 'Auto-generate BreadcrumbList schema on singular posts and pages', 'wp-schema-manager' ); ?>
+		</label>
+		<?php
 	}
 }

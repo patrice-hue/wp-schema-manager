@@ -66,11 +66,16 @@ class WPSchema_Metabox {
 		}
 
 		$types = array(
-			''              => __( '— Use Default —', 'wp-schema-manager' ),
-			'WebPage'       => __( 'WebPage', 'wp-schema-manager' ),
-			'Organization'  => __( 'Organisation', 'wp-schema-manager' ),
-			'LocalBusiness' => __( 'Local Business', 'wp-schema-manager' ),
-			'Person'        => __( 'Person', 'wp-schema-manager' ),
+			''                    => __( '— Use Default —', 'wp-schema-manager' ),
+			'WebPage'             => __( 'WebPage', 'wp-schema-manager' ),
+			'Organization'        => __( 'Organisation', 'wp-schema-manager' ),
+			'LocalBusiness'       => __( 'Local Business', 'wp-schema-manager' ),
+			'ProfessionalService' => __( 'Professional Service', 'wp-schema-manager' ),
+			'Person'              => __( 'Person', 'wp-schema-manager' ),
+			'Service'             => __( 'Service', 'wp-schema-manager' ),
+			'FAQPage'             => __( 'FAQ Page', 'wp-schema-manager' ),
+			'Product'             => __( 'Product', 'wp-schema-manager' ),
+			'Offer'               => __( 'Offer', 'wp-schema-manager' ),
 		);
 
 		/**

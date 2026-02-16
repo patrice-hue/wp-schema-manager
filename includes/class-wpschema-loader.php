@@ -32,6 +32,9 @@ class WPSchema_Loader {
 
 			$conflict = new WPSchema_Conflict();
 			$conflict->init();
+
+			$bulk = new WPSchema_Bulk();
+			$bulk->init();
 		}
 
 		$output = new WPSchema_Output();
@@ -49,6 +52,7 @@ class WPSchema_Loader {
 		require_once $includes_dir . 'class-wpschema-output.php';
 		require_once $includes_dir . 'class-wpschema-conflict.php';
 		require_once $includes_dir . 'class-wpschema-preview.php';
+		require_once $includes_dir . 'class-wpschema-bulk.php';
 
 		// Schema type classes.
 		$types_dir = $includes_dir . 'schema-types/';
@@ -58,5 +62,11 @@ class WPSchema_Loader {
 		require_once $types_dir . 'class-wpschema-type-organisation.php';
 		require_once $types_dir . 'class-wpschema-type-website.php';
 		require_once $types_dir . 'class-wpschema-type-webpage.php';
+		require_once $types_dir . 'class-wpschema-type-service.php';
+		require_once $types_dir . 'class-wpschema-type-professionalservice.php';
+		require_once $types_dir . 'class-wpschema-type-faqpage.php';
+		require_once $types_dir . 'class-wpschema-type-breadcrumblist.php';
+		require_once $types_dir . 'class-wpschema-type-product.php';
+		require_once $types_dir . 'class-wpschema-type-offer.php';
 	}
 }

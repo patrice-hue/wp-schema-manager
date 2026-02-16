@@ -3,7 +3,7 @@
  * Plugin Name: WP Schema Manager
  * Plugin URI:  https://github.com/patrice-hue/wp-schema-manager
  * Description: A lightweight, developer-friendly WordPress plugin for managing JSON-LD structured data. Built for technical SEOs and developers who need precise, conflict-free schema output.
- * Version:     0.1.0
+ * Version:     0.2.0
  * Author:      Patrice Cognard
  * Author URI:  https://www.digitalhitmen.com.au/
  * License:     GPL-2.0-or-later
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WPSCHEMA_VERSION', '0.1.0' );
+define( 'WPSCHEMA_VERSION', '0.2.0' );
 define( 'WPSCHEMA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WPSCHEMA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'WPSCHEMA_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -64,8 +64,14 @@ function wpschema_activate(): void {
 		'org_region'         => '',
 		'org_postal_code'    => '',
 		'org_country'        => '',
-		'website_schema'     => true,
-		'enabled_post_types' => array( 'post', 'page' ),
+		'website_schema'      => true,
+		'enabled_post_types'  => array( 'post', 'page' ),
+		'service_name'        => '',
+		'service_description' => '',
+		'service_url'         => '',
+		'service_type'        => '',
+		'service_area'        => '',
+		'breadcrumb_enabled'  => false,
 	);
 
 	if ( ! get_option( 'wpschema_settings' ) ) {
