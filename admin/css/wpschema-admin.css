@@ -1,0 +1,70 @@
+/**
+ * WP Schema Manager — Admin Styles
+ *
+ * @package WPSchemaManager
+ */
+
+/* Settings page */
+.wpschema-settings-wrap {
+	max-width: 800px;
+}
+
+.wpschema-settings-wrap h2 {
+	margin-top: 2em;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #c3c4c7;
+}
+
+.wpschema-settings-wrap .form-table th {
+	width: 180px;
+}
+
+/* Schema preview meta box */
+.wpschema-preview-wrap {
+	position: relative;
+}
+
+.wpschema-preview-output {
+	background: #1e1e1e;
+	color: #d4d4d4;
+	padding: 16px;
+	border-radius: 4px;
+	font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+	font-size: 12px;
+	line-height: 1.6;
+	overflow-x: auto;
+	max-height: 400px;
+	overflow-y: auto;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	margin: 8px 0;
+	border: 1px solid #3c3c3c;
+}
+
+.wpschema-preview-status {
+	font-style: italic;
+	color: #666;
+	margin-left: 8px;
+}
+
+/* Meta box styling */
+.wpschema-metabox label {
+	display: block;
+	margin-bottom: 4px;
+}
+
+.wpschema-metabox select,
+.wpschema-metabox textarea {
+	margin-top: 4px;
+}
+
+.wpschema-metabox .description {
+	color: #646970;
+	font-style: italic;
+	font-size: 12px;
+}
+
+/* Conflict notice styling */
+.notice.wpschema-conflict {
+	border-left-color: #dba617;
+}
