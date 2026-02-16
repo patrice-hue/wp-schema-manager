@@ -172,14 +172,28 @@ class WPSchema_Preview {
 
 		if ( 'WebPage' !== $schema_type ) {
 			$entity = match ( $schema_type ) {
-				'Organization'  => new WPSchema_Type_Organisation( $settings ),
-				'LocalBusiness' => new WPSchema_Type_LocalBusiness( $settings ),
-				'Person'        => new WPSchema_Type_Person( $settings ),
-				default         => null,
+				'Organization'        => new WPSchema_Type_Organisation( $settings ),
+				'LocalBusiness'       => new WPSchema_Type_LocalBusiness( $settings ),
+				'ProfessionalService' => new WPSchema_Type_ProfessionalService( $settings ),
+				'Person'              => new WPSchema_Type_Person( $settings ),
+				'Service'             => new WPSchema_Type_Service( $settings ),
+				'FAQPage'             => new WPSchema_Type_FAQPage( $settings ),
+				'Product'             => new WPSchema_Type_Product( $settings ),
+				'Offer'               => new WPSchema_Type_Offer( $settings ),
+				default               => null,
 			};
 
 			if ( $entity ) {
 				$schemas[] = $entity->build( $post_id );
+			}
+		}
+
+		// BreadcrumbList preview.
+		if ( ! empty( $settings['breadcrumb_enabled'] ) ) {
+			$breadcrumb = new WPSchema_Type_BreadcrumbList( $settings );
+			$breadcrumb_schema = $breadcrumb->build( $post_id );
+			if ( ! empty( $breadcrumb_schema ) ) {
+				$schemas[] = $breadcrumb_schema;
 			}
 		}
 
@@ -206,6 +220,7 @@ class WPSchema_Preview {
 			'schema_type'        => 'Organization',
 			'website_schema'     => true,
 			'enabled_post_types' => array( 'post', 'page' ),
+			'breadcrumb_enabled' => false,
 		);
 
 		return wp_parse_args( get_option( 'wpschema_settings', array() ), $defaults );
